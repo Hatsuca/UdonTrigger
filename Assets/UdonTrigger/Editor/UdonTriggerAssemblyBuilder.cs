@@ -7,6 +7,7 @@ public class UdonTriggerAssemblyBuilder
 {
     protected StringBuilder _assemblyTextBuilder = new StringBuilder();
     protected int indentLevel = 1;
+    protected int assemblyLineCount = 0;
 
     protected string GetAssemblyStr()
     {
