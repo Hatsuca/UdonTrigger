@@ -88,13 +88,13 @@ namespace UdonTrigger
 
             EditorGUILayout.LabelField("Triggers");
             EditorGUI.indentLevel++;
-            for (int i=0; i < _triggerProgramAsset.triggers.Length; i++)
+            for (int i=0; i < _triggerProgramAsset.triggers.Count; i++)
             {
                 EditorGUILayout.LabelField($"Name: {_triggerProgramAsset.triggers[i].name}");
                 EditorGUILayout.LabelField($"Type: {_triggerProgramAsset.triggers[i].triggerType.ToString()}");
                 EditorGUILayout.LabelField("Events");
                 EditorGUI.indentLevel++;
-                for(int l=0; l < _triggerProgramAsset.triggers[i].events.Length; i++)
+                for(int l=0; l < _triggerProgramAsset.triggers[i].events.Count; i++)
                 {
                     EditorGUILayout.LabelField($"Type: {_triggerProgramAsset.triggers[i].events[l].eventType.ToString()}");
                     EditorGUILayout.LabelField($"String: {_triggerProgramAsset.triggers[i].events[l].parameterString}");
@@ -114,10 +114,7 @@ namespace UdonTrigger
                 //イベント追加
                 if (GUILayout.Button("AddEvent"))
                 {
-                    List<TriggerParameters.Events> eventsList = new List<TriggerParameters.Events>();
-                    eventsList.AddRange(_triggerProgramAsset.triggers[i].events);
-                    eventsList.Add(new TriggerParameters.Events(TriggerParameters.EventType.SetGameObjectActive));
-                    _triggerProgramAsset.triggers[i].events = eventsList.ToArray();
+                    _triggerProgramAsset.triggers[i].events.Add(new TriggerParameters.Events(TriggerParameters.EventType.SetGameObjectActive));
                     isChanged = true;
                 }
             }
@@ -126,10 +123,7 @@ namespace UdonTrigger
             //トリガー追加
             if (GUILayout.Button("AddTrigger"))
             {
-                List<TriggerParameters.Triggers> triggersList = new List<TriggerParameters.Triggers>();
-                triggersList.AddRange(_triggerProgramAsset.triggers);
-                triggersList.Add(new TriggerParameters.Triggers(TriggerParameters.TriggerType.OnInteract));
-                _triggerProgramAsset.triggers = triggersList.ToArray();
+                _triggerProgramAsset.triggers.Add(new TriggerParameters.Triggers(TriggerParameters.TriggerType.OnInteract));
                 isChanged = true;
             }
 

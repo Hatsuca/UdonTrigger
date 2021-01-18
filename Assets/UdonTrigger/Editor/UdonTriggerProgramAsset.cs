@@ -18,7 +18,7 @@ namespace UdonTrigger
         [NonSerialized, OdinSerialize]
         private Dictionary<string, (object value, Type type)> heapDefaultValues = new Dictionary<string, (object value, Type type)>();
 
-        public TriggerParameters.Triggers[] triggers = new TriggerParameters.Triggers[0];
+        public List<TriggerParameters.Triggers> triggers = new List<TriggerParameters.Triggers>();
 
         protected override void DrawProgramSourceGUI(UdonBehaviour udonBehaviour, ref bool dirty)
         {

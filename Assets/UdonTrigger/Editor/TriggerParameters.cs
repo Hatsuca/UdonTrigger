@@ -8,7 +8,7 @@ namespace UdonTrigger
     {
         public enum TriggerType
         {
-            OnInteract
+            OnInteract, OnPickup
         }
 
         public enum EventType
@@ -25,7 +25,7 @@ namespace UdonTrigger
         public struct Triggers
         {
             public TriggerType triggerType;
-            public Events[] events;
+            public List<Events> events;
             public string name;
 
             public Triggers(TriggerType _triggerType)
@@ -34,21 +34,26 @@ namespace UdonTrigger
                 switch(triggerType)
                 {
                     case TriggerType.OnInteract:
-                        events = new Events[0];
+                        events = new List<Events>();
                         name = "Test Trigger";
                         break;
                     default:
-                        events = new Events[0];
+                        events = new List<Events>();
                         name = "";
                         break;
                 }
             }
 
-            public Triggers(TriggerType _triggerType, Events[] _events, string _name)
+            public Triggers(TriggerType _triggerType, List<Events> _events, string _name)
             {
                 triggerType = _triggerType;
                 events = _events;
                 name = _name;
+            }
+
+            public static int ConpareType(Triggers a, Triggers b)
+            {
+                return a.triggerType.CompareTo(b.triggerType);
             }
         }
 
@@ -69,7 +74,7 @@ namespace UdonTrigger
                 {
                     case EventType.SetGameObjectActive:
                         parameterString = "";
-                        parameterBoolOp = BoolOp.UnUsed;
+                        parameterBoolOp = BoolOp.True;
                         parameterFloat = 0f;
                         parameterInt = 0;
                         parameterObjects = new Object[0];
