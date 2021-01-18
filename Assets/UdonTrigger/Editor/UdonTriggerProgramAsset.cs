@@ -23,7 +23,7 @@ namespace UdonTrigger
         protected override void DrawProgramSourceGUI(UdonBehaviour udonBehaviour, ref bool dirty)
         {
 
-            //DrawPublicVariables(udonBehaviour, ref dirty);
+            DrawPublicVariables(udonBehaviour, ref dirty);
             DrawAssemblyErrorTextArea();
             DrawAssemblyTextArea(false, ref dirty);
 
@@ -32,14 +32,14 @@ namespace UdonTrigger
         protected override void RefreshProgramImpl()
         {
 
-            CompileTrigger();
+            CompileTriggers();
             base.RefreshProgramImpl();
             ApplyDefaultValuesToHeap();
         }
 
-        protected void CompileTrigger()
+        protected void CompileTriggers()
         {
-            //udonAssembly = ;
+            udonAssembly = UdonTriggerAssemblyBuilder.GetAssemblyStr(triggers, out heapDefaultValues);
         }
 
         protected override void DrawAssemblyTextArea(bool allowEditing, ref bool dirty)
