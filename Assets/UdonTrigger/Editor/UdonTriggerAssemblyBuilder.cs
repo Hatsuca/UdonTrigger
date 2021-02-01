@@ -19,8 +19,8 @@ namespace UdonTrigger {
                 {
                     switch(e.eventType)
                     {
-                        case TriggerParameters.EventType.SetGameObjectActive:
-                            eventList.Add(new SetGameObjectActive(t.triggerType, eventCount, e.parameterObjects, e.parameterBoolOp));
+                        case (int)TriggerParameters.EventType.SetGameObjectActive:
+                            eventList.Add(new SetGameObjectActive((TriggerParameters.TriggerType)t.triggerType, eventCount, e.parameterObjects, (TriggerParameters.BoolOp)e.parameterBoolOp));
                             break;
                     }
 

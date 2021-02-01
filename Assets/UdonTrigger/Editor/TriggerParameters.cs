@@ -8,12 +8,18 @@ namespace UdonTrigger
     {
         public enum TriggerType
         {
-            OnInteract, OnPickup
+            Custom, Relay, OnEnable, OnDestroy, OnSpawn, OnNetworkReady, OnPlayerJoined, OnPlayerLeft, OnPickupUseUp, OnPickupUseDown, OnTimer,
+            OnEnterTrigger, OnExitTrigger, OnKeyDown, OnKeyUp, OnPickup, OnDrop, OnInteract, OnEnterCollider, OnExitCollider, OnDataStorageChange,
+            OnAvatarHit, OnStationEntered, OnStationExited, OnVideoStart, OnVideoEnd, OnVideoPlay, OnVideoPause, OnDisable, OnOwnershipTransfar,
+            OnParticleCollision
         }
 
         public enum EventType
         {
-            SetGameObjectActive, SetComponentActive
+            ActivateCustomTrigger, AddAngularVelocity, AddDamage, AddForce, AddHealth, AddVelocity, AnimationBool, AnimationFloat, AnimationInt, 
+            AnimationIntAdd, AnimationIntDivide, AnimationIntMultiply, AnimationIntSubtract, AnimationTrigger, AudioTrigger, CallUdonMethod,
+            DestroyObject, PlayAnimation, SendRPC, SetAngularVelocity, SetComponentActive, SetGameObjectActive, SetLayer, SetMaterial, SetParticlePlaying,
+            SetUIText, SetVelocity, SetWebPanelURI, SetWebPanelVolume, SpawnObject, TeleportPlayer
         }
 
         public enum BroadcastType
@@ -33,11 +39,17 @@ namespace UdonTrigger
             public List<Events> events;
             public string name;
             public BroadcastType broadcastType;
+            public List<float> probabilities;
+            public List<bool> probabilityLock;
+            public float afterSeconds;
 
             public Triggers(int _triggerType)
             {
                 triggerType = _triggerType;
                 broadcastType = BroadcastType.AlwaysBufferOne;
+                probabilities = new List<float>();
+                probabilityLock = new List<bool>();
+                afterSeconds = 0;
 
                 TriggerType type = (TriggerType)triggerType;
                 switch(type)
@@ -59,6 +71,9 @@ namespace UdonTrigger
                 broadcastType = _broadcastType;
                 events = _events;
                 name = _name;
+                probabilities = new List<float>();
+                probabilityLock = new List<bool>();
+                afterSeconds = 0;
             }
 
             public static int ConpareType(Triggers a, Triggers b)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -107,12 +108,12 @@ namespace UdonTrigger
 
                     _triggerProgramAsset.triggers[i].events[l].parameterObjects[0] = 
                         EditorGUILayout.ObjectField(_triggerProgramAsset.triggers[i].events[l].parameterObjects[0], typeof(GameObject), true);
-                    /*
-                    foreach (UnityEngine.Object _object in _triggerProgramAsset.triggers[i].events[l].parameterObjects)
-                    {
-                        EditorGUILayout.LabelField($"Object: {_object.ToString()}");
-                    }
-                    */
+                    
+                    //foreach (UnityEngine.Object _object in _triggerProgramAsset.triggers[i].events[l].parameterObjects)
+                    //{
+                    //    EditorGUILayout.LabelField($"Object: {_object.ToString()}");
+                    //}
+                    
                     EditorGUI.indentLevel--;
                 }
                 EditorGUI.indentLevel--;
@@ -206,3 +207,4 @@ namespace UdonTrigger
         }
     }
 }
+*/
