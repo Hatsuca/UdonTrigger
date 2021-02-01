@@ -10,6 +10,7 @@ namespace UdonTrigger
 {
     public class UdonTriggerInspector : EditorWindow
     {
+        public GameObject gameObjects;
 
         private static UdonTriggerInspector _window;
 
@@ -94,7 +95,7 @@ namespace UdonTrigger
                 EditorGUILayout.LabelField($"Type: {_triggerProgramAsset.triggers[i].triggerType.ToString()}");
                 EditorGUILayout.LabelField("Events");
                 EditorGUI.indentLevel++;
-                for(int l=0; l < _triggerProgramAsset.triggers[i].events.Count; i++)
+                for(int l=0; l < _triggerProgramAsset.triggers[i].events.Count; l++)
                 {
                     EditorGUILayout.LabelField($"Type: {_triggerProgramAsset.triggers[i].events[l].eventType.ToString()}");
                     EditorGUILayout.LabelField($"String: {_triggerProgramAsset.triggers[i].events[l].parameterString}");
@@ -103,10 +104,15 @@ namespace UdonTrigger
                     EditorGUILayout.LabelField($"Int: {_triggerProgramAsset.triggers[i].events[l].parameterInt.ToString()}");
                     EditorGUILayout.LabelField("Objects");
                     EditorGUI.indentLevel++;
+
+                    _triggerProgramAsset.triggers[i].events[l].parameterObjects[0] = 
+                        EditorGUILayout.ObjectField(_triggerProgramAsset.triggers[i].events[l].parameterObjects[0], typeof(GameObject), true);
+                    /*
                     foreach (UnityEngine.Object _object in _triggerProgramAsset.triggers[i].events[l].parameterObjects)
                     {
                         EditorGUILayout.LabelField($"Object: {_object.ToString()}");
                     }
+                    */
                     EditorGUI.indentLevel--;
                 }
                 EditorGUI.indentLevel--;
@@ -114,7 +120,7 @@ namespace UdonTrigger
                 //イベント追加
                 if (GUILayout.Button("AddEvent"))
                 {
-                    _triggerProgramAsset.triggers[i].events.Add(new TriggerParameters.Events(TriggerParameters.EventType.SetGameObjectActive));
+                    _triggerProgramAsset.triggers[i].events.Add(new TriggerParameters.Events(TriggerParameters.EventType.SetGameObjectActive, "", TriggerParameters.BoolOp.True, 0, 0, new GameObject[1]));
                     isChanged = true;
                 }
             }
@@ -126,7 +132,7 @@ namespace UdonTrigger
                 _triggerProgramAsset.triggers.Add(new TriggerParameters.Triggers(TriggerParameters.TriggerType.OnInteract));
                 isChanged = true;
             }
-
+            
             if (isChanged)
             {
                 EditorUtility.SetDirty(_triggerProgramAsset);

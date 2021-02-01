@@ -10,6 +10,7 @@ namespace UdonTrigger {
             StringBuilder assemblyTextBuilder = new StringBuilder();
             Dictionary<string, (object value, Type type)> values = new Dictionary<string, (object value, Type type)>();
             List<EventBuilder> eventList = new List<EventBuilder>();
+            List<string> publicVariablesName = new List<string>();
 
             int eventCount = 0;
             foreach(TriggerParameters.Triggers t in triggerList)
@@ -22,6 +23,10 @@ namespace UdonTrigger {
                             eventList.Add(new SetGameObjectActive(t.triggerType, eventCount, e.parameterObjects, e.parameterBoolOp));
                             break;
                     }
+
+                    for (int i = 0; i < e.parameterObjects.Length; i++)
+                        publicVariablesName.Add($"object{i}_{eventCount}");
+
                     eventCount++;
                 }
             }
@@ -31,6 +36,11 @@ namespace UdonTrigger {
 
             foreach(var eventBuilder in eventList)
             {
+                foreach(var publicVariable in publicVariablesName)
+                {
+                    assemblyTextBuilder.Append($"{new string(' ', 4)}.export {publicVariable}\n");
+                }
+
                 var valueDic = eventBuilder.GetValues();
                 foreach(KeyValuePair<string, (object value, Type type)> item in valueDic)
                 {
@@ -49,7 +59,7 @@ namespace UdonTrigger {
             }
             defaultValues = values;
 
-            assemblyTextBuilder.Append(".data_end\n\n");
+            assemblyTextBuilder.Append("\n.data_end\n\n");
 
 
             //Construct Code Block

@@ -22,7 +22,7 @@ namespace UdonTrigger
 
         protected override void DrawProgramSourceGUI(UdonBehaviour udonBehaviour, ref bool dirty)
         {
-
+            EditorGUILayout.LabelField("This is UdonTrigger!");
             DrawPublicVariables(udonBehaviour, ref dirty);
             DrawAssemblyErrorTextArea();
             DrawAssemblyTextArea(false, ref dirty);
@@ -146,15 +146,13 @@ namespace UdonTrigger
                 defaultValue = heapDefaultValues[symbol].value;
             }
 
+            //強制defaultValue固定
             if(variableValue == null || !variableValue.Equals(defaultValue))
             {
                 if(defaultValue != null)
                 {
-                    if(!dirty && GUILayout.Button("Reset to Default Value"))
-                    {
-                        variableValue = defaultValue;
-                        dirty = true;
-                    }
+                    variableValue = defaultValue;
+                    dirty = true;
                 }
             }
 
@@ -167,6 +165,7 @@ namespace UdonTrigger
 
         protected override void OnAfterDeserialize()
         {
+
         }
 
         #endregion
