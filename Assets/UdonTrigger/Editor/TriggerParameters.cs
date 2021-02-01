@@ -16,6 +16,11 @@ namespace UdonTrigger
             SetGameObjectActive, SetComponentActive
         }
 
+        public enum BroadcastType
+        {
+            Always, Master, Local, Owner, AlwaysUnbuffered, MasterUnbuffered, OwnerUnbuffered, AlwaysBufferOne, MasterBufferOne, OwnerBufferOne
+        }
+
         public enum BoolOp
         {
             UnUsed, False, True, Toggle
@@ -24,14 +29,18 @@ namespace UdonTrigger
         [System.Serializable]
         public struct Triggers
         {
-            public TriggerType triggerType;
+            public int triggerType;
             public List<Events> events;
             public string name;
+            public BroadcastType broadcastType;
 
-            public Triggers(TriggerType _triggerType)
+            public Triggers(int _triggerType)
             {
                 triggerType = _triggerType;
-                switch(triggerType)
+                broadcastType = BroadcastType.AlwaysBufferOne;
+
+                TriggerType type = (TriggerType)triggerType;
+                switch(type)
                 {
                     case TriggerType.OnInteract:
                         events = new List<Events>();
@@ -44,9 +53,10 @@ namespace UdonTrigger
                 }
             }
 
-            public Triggers(TriggerType _triggerType, List<Events> _events, string _name)
+            public Triggers(int _triggerType,BroadcastType _broadcastType, List<Events> _events, string _name)
             {
                 triggerType = _triggerType;
+                broadcastType = _broadcastType;
                 events = _events;
                 name = _name;
             }
@@ -60,21 +70,24 @@ namespace UdonTrigger
         [System.Serializable]
         public struct Events
         {
-            public EventType eventType;
+            public int eventType;
             public string parameterString;
-            public BoolOp parameterBoolOp;
+            public int parameterBoolOp;
             public float parameterFloat;
             public int parameterInt;
             public Object[] parameterObjects;
 
-            public Events(EventType _eventType)
+
+            public Events(int _eventType)
             {
                 eventType = _eventType;
-                switch(eventType)
+
+                EventType type = (EventType)eventType;
+                switch(type)
                 {
                     case EventType.SetGameObjectActive:
                         parameterString = "";
-                        parameterBoolOp = BoolOp.True;
+                        parameterBoolOp = (int)BoolOp.True;
                         parameterFloat = 0f;
                         parameterInt = 0;
                         parameterObjects = new Object[0];
@@ -82,7 +95,7 @@ namespace UdonTrigger
 
                     default:
                         parameterString = "";
-                        parameterBoolOp = BoolOp.UnUsed;
+                        parameterBoolOp = (int)BoolOp.UnUsed;
                         parameterFloat = 0f;
                         parameterInt = 0;
                         parameterObjects = new Object[0];
@@ -90,7 +103,7 @@ namespace UdonTrigger
                 }
             }
 
-            public Events(EventType _eventType, string _parameterString, BoolOp _parameterBoolOp, float _parameterFloat, int _parameterInt, Object[] _parameterObjects)
+            public Events(int _eventType, string _parameterString, int _parameterBoolOp, float _parameterFloat, int _parameterInt, Object[] _parameterObjects)
             {
                 eventType = _eventType;
                 parameterString = _parameterString;
